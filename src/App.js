@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
-import loginservices from './services/login'
+import loginServices from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -10,6 +10,12 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [newBlog, setNewBlog] = useState({
+    title: "",
+    author: "",
+    url: "",
+    likes: "",
+  })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -18,10 +24,11 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJson = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJson) {
-      const user = JSON.parse(loggedUserJson)
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      blogService.setToken(user.token)
     }
   }, [])
 
@@ -29,13 +36,14 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginservices.login({
+      const user = await loginServices.login({
         username, password,
       })
 
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -83,6 +91,64 @@ const App = () => {
     )
   )
 
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <input
+        type ="text"
+        name= "title"
+        placeholder='title'
+        value={newBlog.title}
+        onChange={handleBlogChange}
+      />
+      <input
+        type ="text"
+        name= "author"
+        placeholder='author'
+        value={newBlog.author}
+        onChange={handleBlogChange}
+      />
+      <input
+        type="text"
+        name="url"
+        placeholder='url'
+        value={newBlog.url}
+        onChange={handleBlogChange}
+      />
+      <input
+        type="integer"
+        name="likes"
+        placeholder='likes'
+        value={newBlog.likes}
+        onChange={handleBlogChange}
+      />
+       <button type='submit'>save</button>
+    </form>
+  )
+
+  const handleBlogChange = (event) => {
+    setNewBlog({...newBlog, [event.target.name]: event.target.value})
+  }
+
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlog.title,
+      author: newBlog.author,
+      url: newBlog.url,
+      likes: newBlog.likes
+    }
+    console.log(blogObject)
+    console.log(user.token)
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog('')
+      })
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -93,6 +159,8 @@ const App = () => {
       loginForm() : // if user is null show login form
       <div>
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
+        <p>create new:</p>
+        {blogForm()}
         {allBlogs()}
       </div>
     }
