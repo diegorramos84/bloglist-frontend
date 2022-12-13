@@ -95,34 +95,50 @@ const App = () => {
 
   const blogForm = () => (
     <form onSubmit={addBlog}>
-      <input
-        type ="text"
-        name= "title"
-        placeholder='title'
-        value={newBlog.title}
-        onChange={handleBlogChange}
-      />
-      <input
-        type ="text"
-        name= "author"
-        placeholder='author'
-        value={newBlog.author}
-        onChange={handleBlogChange}
-      />
-      <input
-        type="text"
-        name="url"
-        placeholder='url'
-        value={newBlog.url}
-        onChange={handleBlogChange}
-      />
-      <input
-        type="integer"
-        name="likes"
-        placeholder='likes'
-        value={newBlog.likes}
-        onChange={handleBlogChange}
-      />
+      <div>
+        <label>
+          Title:
+          <input
+            type ="text"
+            name= "title"
+            value={newBlog.title}
+            onChange={handleBlogChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Author:
+          <input
+            type ="text"
+            name= "author"
+            value={newBlog.author}
+            onChange={handleBlogChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Url:
+          <input
+            type="text"
+            name="url"
+            value={newBlog.url}
+            onChange={handleBlogChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          likes:
+          <input
+            type="integer"
+            name="likes"
+            value={newBlog.likes}
+            onChange={handleBlogChange}
+          />
+        </label>
+      </div>
        <button type='submit'>save</button>
     </form>
   )
@@ -176,6 +192,7 @@ const App = () => {
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
         <p>create new:</p>
         {blogForm()}
+        <br></br>
         {allBlogs()}
       </div>
     }
