@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import ErrorMessage from './components/ErrorMessage'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import Togglable from './components/Toggable'
 import blogService from './services/blogs'
 import loginServices from './services/login'
 
@@ -188,13 +189,15 @@ const App = () => {
     <Notification message={message} />
 
     {user === null ?
-      <LoginForm
-        username={username}
-        password={password}
-        handleUsernameChange={({ target }) => setUsername(target.value)}
-        handlePasswordChange={({ target }) => setPassword(target.value)}
-        handleSubmit={handleLogin}
-      /> :
+      <Togglable buttonLabel={'login'}>
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
+      </Togglable> :
       <div>
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
         <p>create new:</p>
