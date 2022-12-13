@@ -202,14 +202,16 @@ const App = () => {
       <div>
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
         <p>create new:</p>
-        <BlogForm
-         newBlogTitle={newBlog.title}
-         newBlogAuthor={newBlog.author}
-         newBlogUrl={newBlog.url}
-         newBlogLikes={newBlog.likes}
-         handleSubmit={addBlog}
-         handleBlogChange={handleBlogChange}
-         />
+        <Togglable buttonLabel={'add new blog'}>
+          <BlogForm
+          newBlogTitle={newBlog.title}
+          newBlogAuthor={newBlog.author}
+          newBlogUrl={newBlog.url}
+          newBlogLikes={newBlog.likes}
+          handleSubmit={addBlog}
+          handleBlogChange={handleBlogChange}
+          />
+        </Togglable>
         <br></br>
         {allBlogs()}
       </div>
