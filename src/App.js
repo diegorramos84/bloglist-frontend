@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import ErrorMessage from './components/ErrorMessage'
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginServices from './services/login'
@@ -57,29 +58,29 @@ const App = () => {
     }
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-        type="text"
-        name="Username"
-        value={username}
-        onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-        type="text"
-        name="Password"
-        value={password}
-        onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-    <button type="submit">login</button>
-  </form>
-  )
+  // const loginForm = () => (
+  //   <form onSubmit={handleLogin}>
+  //     <div>
+  //       username
+  //       <input
+  //       type="text"
+  //       name="Username"
+  //       value={username}
+  //       onChange={({ target }) => setUsername(target.value)}
+  //       />
+  //     </div>
+  //     <div>
+  //       password
+  //       <input
+  //       type="text"
+  //       name="Password"
+  //       value={password}
+  //       onChange={({ target }) => setPassword(target.value)}
+  //       />
+  //     </div>
+  //   <button type="submit">login</button>
+  // </form>
+  // )
 
   const handleLogout = (event) => {
     event.preventDefault()
@@ -187,7 +188,13 @@ const App = () => {
     <Notification message={message} />
 
     {user === null ?
-      loginForm() : // if user is null show login form
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={({ target }) => setPassword(target.value)}
+        handleSubmit={handleLogin}
+      /> :
       <div>
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
         <p>create new:</p>
