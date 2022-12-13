@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import ErrorMessage from './components/ErrorMessage'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -95,55 +96,55 @@ const App = () => {
     )
   )
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        <label>
-          Title:
-          <input
-            type ="text"
-            name= "title"
-            value={newBlog.title}
-            onChange={handleBlogChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Author:
-          <input
-            type ="text"
-            name= "author"
-            value={newBlog.author}
-            onChange={handleBlogChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Url:
-          <input
-            type="text"
-            name="url"
-            value={newBlog.url}
-            onChange={handleBlogChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          likes:
-          <input
-            type="integer"
-            name="likes"
-            value={newBlog.likes}
-            onChange={handleBlogChange}
-          />
-        </label>
-      </div>
-       <button type='submit'>save</button>
-    </form>
-  )
+  // const blogForm = () => (
+  //   <form onSubmit={addBlog}>
+  //     <div>
+  //       <label>
+  //         Title:
+  //         <input
+  //           type ="text"
+  //           name= "title"
+  //           value={newBlog.title}
+  //           onChange={handleBlogChange}
+  //         />
+  //       </label>
+  //     </div>
+  //     <div>
+  //       <label>
+  //         Author:
+  //         <input
+  //           type ="text"
+  //           name= "author"
+  //           value={newBlog.author}
+  //           onChange={handleBlogChange}
+  //         />
+  //       </label>
+  //     </div>
+  //     <div>
+  //       <label>
+  //         Url:
+  //         <input
+  //           type="text"
+  //           name="url"
+  //           value={newBlog.url}
+  //           onChange={handleBlogChange}
+  //         />
+  //       </label>
+  //     </div>
+  //     <div>
+  //       <label>
+  //         likes:
+  //         <input
+  //           type="integer"
+  //           name="likes"
+  //           value={newBlog.likes}
+  //           onChange={handleBlogChange}
+  //         />
+  //       </label>
+  //     </div>
+  //      <button type='submit'>save</button>
+  //   </form>
+  // )
 
   const handleBlogChange = (event) => {
     setNewBlog({...newBlog, [event.target.name]: event.target.value})
@@ -201,7 +202,14 @@ const App = () => {
       <div>
         <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
         <p>create new:</p>
-        {blogForm()}
+        <BlogForm
+         newBlogTitle={newBlog.title}
+         newBlogAuthor={newBlog.author}
+         newBlogUrl={newBlog.url}
+         newBlogLikes={newBlog.likes}
+         handleSubmit={addBlog}
+         handleBlogChange={handleBlogChange}
+         />
         <br></br>
         {allBlogs()}
       </div>
