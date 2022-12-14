@@ -63,7 +63,7 @@ const App = () => {
 
   const allBlogs = () => (
     blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} />
+      <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs}/>
     )
   )
 
