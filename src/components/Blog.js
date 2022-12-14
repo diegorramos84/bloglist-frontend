@@ -1,8 +1,9 @@
 import { useState } from "react"
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ blog, blogs, setBlogs}) => {
   const [visible, setVisible] = useState(false)
+  const user = JSON.parse(window.localStorage.loggedBlogappUser)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
@@ -44,7 +45,13 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
-        <button onClick={deleteBlog}>delete</button>
+        {/* <button onClick={deleteBlog}>delete </button> */}
+        {
+        (user.username === blog.user.username)
+        ? <button onClick={deleteBlog}>delete </button>
+        : null
+        }
+
       </div>
     </div>
 )}
