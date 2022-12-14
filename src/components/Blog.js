@@ -18,6 +18,14 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     setBlogs(blogs.map(b => b.id !== response.id ? b : response))
   }
 
+  const deleteBlog = async () => {
+    if (window.confirm(`Remove log ${blog.title} by ${blog.author}`)) {
+      await blogService.removeBlog(blog.id)
+      const updatedBlogs = blogs.filter(b => b.id !== blog.id)
+      setBlogs(updatedBlogs)
+    }
+  }
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -36,6 +44,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
+        <button onClick={deleteBlog}>delete</button>
       </div>
     </div>
 )}
