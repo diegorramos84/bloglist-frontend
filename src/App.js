@@ -61,8 +61,8 @@ const App = () => {
     setUser(null)
   }
 
-  const allBlogs = () => (
-    blogs.map(blog =>
+    const allBlogs = () => (
+    blogs.sort((a,b) => b.likes - a.likes).map(blog =>
       <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs}/>
     )
   )

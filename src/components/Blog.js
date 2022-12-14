@@ -14,7 +14,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   const increaseLikes = async () => {
     const increaseLikes = blog.likes + 1
 
-    const response = await blogService.update(blog.id,{...blog, likes: increaseLikes})
+    const response = await blogService.update(blog.id,{...blog, likes: increaseLikes })
     setBlogs(blogs.map(b => b.id !== response.id ? b : response))
   }
 
@@ -36,7 +36,6 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
-
       </div>
     </div>
 )}
