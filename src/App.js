@@ -51,7 +51,7 @@ const App = () => {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -61,7 +61,7 @@ const App = () => {
     setUser(null)
   }
 
-    const allBlogs = () => (
+  const allBlogs = () => (
     blogs.sort((a,b) => b.likes - a.likes).map(blog =>
       <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs}/>
     )
@@ -76,7 +76,7 @@ const App = () => {
         setMessage('a new blog ' + blogObject.title + ' by ' + blogObject.author + ' added')
         setTimeout(() => {
           setMessage(null)
-        }, 5000);
+        }, 5000)
       })
   }
 
@@ -84,29 +84,29 @@ const App = () => {
     <div>
       <h2>blogs</h2>
 
-    <ErrorMessage message={errorMessage} />
-    <Notification message={message} />
+      <ErrorMessage message={errorMessage} />
+      <Notification message={message} />
 
-    {user === null ?
-      <Togglable buttonLabel={'login'}>
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-        />
-      </Togglable> :
-      <div>
-        <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
-        <p>create new:</p>
-        <Togglable buttonLabel={'add new blog'}>
-          <BlogForm createBlog={addBlog}/>
-        </Togglable>
-        <br></br>
-        {allBlogs()}
-      </div>
-    }
+      {user === null ?
+        <Togglable buttonLabel={'login'}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+        </Togglable> :
+        <div>
+          <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
+          <p>create new:</p>
+          <Togglable buttonLabel={'add new blog'}>
+            <BlogForm createBlog={addBlog}/>
+          </Togglable>
+          <br></br>
+          {allBlogs()}
+        </div>
+      }
 
     </div>
   )
