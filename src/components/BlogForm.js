@@ -64,17 +64,6 @@ const BlogForm = ({ createBlog }) => {
             />
           </label>
         </div>
-        <div>
-          <label>
-            likes:
-            <input
-              type="integer"
-              name="likes"
-              value={newBlog.likes}
-              onChange={handleBlogChange}
-            />
-          </label>
-        </div>
         <button type='submit'>save</button>
       </form>
     </div>
