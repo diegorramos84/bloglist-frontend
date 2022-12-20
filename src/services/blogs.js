@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Blog from '../components/Blog'
 const baseUrl = '/api/blogs'
 
 let token = null

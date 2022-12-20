@@ -1,7 +1,7 @@
 const ErrorMessage = ({ message }) => {
   const errorStyle = {
-    color: "red",
-    background: "lightgrey",
+    color: 'red',
+    background: 'lightgrey',
     fontSize: 20,
     borderStyle: 'solid',
     borderRadius: 5,
@@ -14,13 +14,11 @@ const ErrorMessage = ({ message }) => {
   }
 
   if (message)
-  return (
-    <div style = {errorStyle}>
-      {message}
-    </div>
-  )
-
-
+    return (
+      <div style = {errorStyle}>
+        {message}
+      </div>
+    )
 }
 
 export default ErrorMessage

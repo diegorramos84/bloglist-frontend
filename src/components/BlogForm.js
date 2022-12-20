@@ -1,16 +1,15 @@
-import { useState } from "react"
-import blogService from "../services/blogs"
+import { useState } from 'react'
 
 const BlogForm = ({ createBlog }) => {
   const [newBlog, setNewBlog] = useState({
-    title: "",
-    author: "",
-    url: "",
-    likes: "",
+    title: '',
+    author: '',
+    url: '',
+    likes: '',
   })
 
   const handleBlogChange = (event) => {
-    setNewBlog({...newBlog, [event.target.name]: event.target.value})
+    setNewBlog({ ...newBlog, [event.target.name]: event.target.value })
   }
 
   const addBlog = (event) => {
@@ -22,10 +21,10 @@ const BlogForm = ({ createBlog }) => {
       likes: newBlog.likes
     })
     setNewBlog({
-      title: "",
-      author: "",
-      url: "",
-      likes: "",
+      title: '',
+      author: '',
+      url: '',
+      likes: '',
     })
   }
 
@@ -77,7 +76,7 @@ const BlogForm = ({ createBlog }) => {
           </label>
         </div>
         <button type='submit'>save</button>
-    </form>
+      </form>
     </div>
   )
 }
