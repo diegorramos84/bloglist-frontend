@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, setBlogs }) => {
+const Blog = ({ blog, setBlogs, username }) => {
   const [visible, setVisible] = useState(false)
-  const [currentUser, setCurrentUser] = useState('')
+  // const [currentUser, setCurrentUser] = useState('')
 
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
-  useEffect(() => {
-    setCurrentUser(JSON.parse(window.localStorage.loggedBlogappUser).username)
-  }, [])
+  // useEffect(() => {
+  //   setCurrentUser(JSON.parse(window.localStorage.loggedBlogappUser).username)
+  // }, [])
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -63,7 +63,9 @@ const Blog = ({ blog, setBlogs }) => {
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
-        {(currentUser === blog.user.username)
+        {console.log(username, 'current user')}
+        {console.log(blog.user.username, 'blog owner')}
+        {(username === blog.user.username)
           ? <button onClick={deleteBlog}> delete </button>
           : null }
         {/* { deleteButton() } */}
