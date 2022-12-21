@@ -1,30 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ blog, setBlogs }) => {
   const [visible, setVisible] = useState(false)
-  const user = JSON.parse(window.localStorage.loggedBlogappUser)
+  const [currentUser, setCurrentUser] = useState('')
+
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
+  useEffect(() => {
+    setCurrentUser(JSON.parse(window.localStorage.loggedBlogappUser).username)
+  }, [])
+
   const toggleVisibility = () => {
     setVisible(!visible)
-  }
-
-  const increaseLikes = async () => {
-    const increaseLikes = blog.likes + 1
-
-    const response = await blogService.update(blog.id, { ...blog, likes: increaseLikes })
-    setBlogs(blogs.map(b => b.id !== response.id ? b : response))
-  }
-
-  const deleteBlog = async () => {
-    if (window.confirm(`Remove log ${blog.title} by ${blog.author}`)) {
-      await blogService.removeBlog(blog.id)
-      const updatedBlogs = blogs.filter(b => b.id !== blog.id)
-      setBlogs(updatedBlogs)
-    }
   }
 
   const blogStyle = {
@@ -34,6 +24,34 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     borderWidth: 1,
     marginBottom: 5
   }
+
+  const increaseLikes = async () => {
+    const increaseLikes = blog.likes + 1
+    await blogService.update(blog.id, { ...blog, likes: increaseLikes })
+    const updatedBlogs = await blogService.getAll()
+    updatedBlogs.sort((a,b) => b.likes - a.likes)
+    setBlogs(updatedBlogs)
+  }
+
+  const deleteBlog = async () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      await blogService.removeBlog(blog.id)
+      const updatedBlogs = await blogService.getAll()
+      updatedBlogs.sort((a,b) => b.likes - a.likes)
+      setBlogs(updatedBlogs)
+    }
+  }
+
+  // const deleteButton = () => {
+  //   const blogOwner = blog.user.username
+  //   if (JSON.parse(window.localStorage.loggedBlogappUser).username === blog.user.username){
+  //     return(
+  //       <button onClick={deleteBlog}> delete </button>
+  //     )
+  //   } else {
+  //     return (null)
+  //   }
+  // }
 
   return (
     <div style={blogStyle}>
@@ -45,11 +63,10 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
-        {
-          (user.username === blog.user.username)
-            ? <button onClick={deleteBlog}>delete </button>
-            : null
-        }
+        {(currentUser === blog.user.username)
+          ? <button onClick={deleteBlog}> delete </button>
+          : null }
+        {/* { deleteButton() } */}
       </div>
     </div>
   )
