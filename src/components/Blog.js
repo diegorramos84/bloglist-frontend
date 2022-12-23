@@ -39,15 +39,14 @@ const Blog = ({ blog, setBlogs, username }) => {
   return (
     <div style={blogStyle}>
       <div style={hideWhenVisible}>
-        <p>{blog.title} <button onClick={toggleVisibility}>view</button></p>
+        <p className='title'>{blog.title} <button onClick={toggleVisibility}>view</button></p>
+        <p className='author'>{blog.author}</p>
       </div>
       <div style={showWhenVisible}>
         <p>{blog.title} <button onClick={toggleVisibility}>hide</button></p>
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
         <p>{blog.author}</p>
-        {console.log(username, 'current user')}
-        {console.log(blog.user.username, 'blog owner')}
         {(username === blog.user.username)
           ? <button onClick={deleteBlog}> delete </button>
           : null }
