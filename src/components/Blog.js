@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, setBlogs, username }) => {
+const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
   const [visible, setVisible] = useState(false)
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
+  // const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {
@@ -38,15 +38,17 @@ const Blog = ({ blog, setBlogs, username }) => {
 
   return (
     <div style={blogStyle}>
-      <div style={hideWhenVisible}>
-        <p className='title'>{blog.title} <button onClick={toggleVisibility}>view</button></p>
+      <div>
+        <p className='title'>{blog.title}</p>
         <p className='author'>{blog.author}</p>
+        {!visible ? <button onClick={toggleVisibility}>view</button> :null}
       </div>
-      <div style={showWhenVisible}>
-        <p>{blog.title} <button onClick={toggleVisibility}>hide</button></p>
-        <p>{blog.url}</p>
-        <p>likes {blog.likes} <button onClick={increaseLikes}>like</button></p>
-        <p>{blog.author}</p>
+      <div className='togglableContent'style={showWhenVisible}>
+        <button onClick={toggleVisibility}>hide</button>
+        <p className='url'>{blog.url}</p>
+        {/* using callOnlikes "trick" to avoid triggeting the function that has put and get requests */}
+        <p className='likes'>likes {blog.likes} <button onClick={callOnLikes ? callOnLikes : increaseLikes}>like</button></p>
+        {/* <p>{blog.author}</p> */}
         {(username === blog.user.username)
           ? <button onClick={deleteBlog}> delete </button>
           : null }
