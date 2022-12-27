@@ -19,6 +19,10 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
     marginBottom: 5
   }
 
+  const buttonStyle = {
+    display: 'inline-block',
+  }
+
   const increaseLikes = async () => {
     const increaseLikes = blog.likes + 1
     await blogService.update(blog.id, { ...blog, likes: increaseLikes })
@@ -41,7 +45,7 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
       <div>
         <p className='title'>{blog.title}</p>
         <p className='author'>{blog.author}</p>
-        {!visible ? <button onClick={toggleVisibility}>view</button> :null}
+        {!visible ? <button style={buttonStyle} onClick={toggleVisibility}>view</button> :null}
       </div>
       <div className='togglableContent'style={showWhenVisible}>
         <button onClick={toggleVisibility}>hide</button>

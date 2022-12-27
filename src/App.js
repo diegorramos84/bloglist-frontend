@@ -68,7 +68,7 @@ const App = () => {
   )
 
 
-  const addBlog = (blogObject) => {
+  const createBlog = (blogObject) => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
@@ -101,7 +101,7 @@ const App = () => {
           <p>{user.name} is logged in <button onClick={handleLogout}>logout</button></p>
           <p>create new:</p>
           <Togglable buttonLabel={'add new blog'}>
-            <BlogForm createBlog={addBlog}/>
+            <BlogForm createBlog={createBlog}/>
           </Togglable>
           <br></br>
           {allBlogs()}
