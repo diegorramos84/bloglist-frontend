@@ -45,13 +45,13 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
       <div>
         <p className='title'>{blog.title}</p>
         <p className='author'>{blog.author}</p>
-        {!visible ? <button style={buttonStyle} onClick={toggleVisibility}>view</button> :null}
+        {!visible ? <button id="view" style={buttonStyle} onClick={toggleVisibility}>view</button> :null}
       </div>
       <div className='togglableContent'style={showWhenVisible}>
         <button onClick={toggleVisibility}>hide</button>
         <p className='url'>{blog.url}</p>
         {/* using callOnlikes "trick" to avoid triggeting the function that has put and get requests */}
-        <p className='likes'>likes {blog.likes} <button onClick={callOnLikes ? callOnLikes : increaseLikes}>like</button></p>
+        <p className='likes'>likes {blog.likes} <button id="likeButton"onClick={callOnLikes ? callOnLikes : increaseLikes}>like</button></p>
         {/* <p>{blog.author}</p> */}
         {(username === blog.user.username)
           ? <button onClick={deleteBlog}> delete </button>

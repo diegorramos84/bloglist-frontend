@@ -47,7 +47,16 @@ describe('Blog app', function() {
       cy.get('#author').type('Diego Ramos')
       cy.get('#url').type('www.cy.com')
       cy.get('#saveblog').click()
+    })
 
+    it('user can like a blog', function() {
+      cy.contains('add new blog').click()
+      cy.get('#title').type('this is a test')
+      cy.get('#author').type('Diego Ramos')
+      cy.get('#url').type('www.cy.com')
+      cy.get('#saveblog').click()
+      cy.get('#view').click()
+      cy.get('#likeButton').click()
     })
   })
 })
