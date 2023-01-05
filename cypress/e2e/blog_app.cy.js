@@ -43,40 +43,40 @@ describe('Blog app', function() {
 
     it('A blog can be created', function() {
       cy.contains('add new blog').click()
-      cy.get('#title').type('this is a test')
-      cy.get('#author').type('Diego Ramos')
-      cy.get('#url').type('www.cy.com')
-      cy.get('#saveblog').click()
+      cy.get('.titleInput').type('this is a test')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
     })
 
     it('user can like a blog', function() {
       cy.contains('add new blog').click()
-      cy.get('#title').type('this is a test')
-      cy.get('#author').type('Diego Ramos')
-      cy.get('#url').type('www.cy.com')
-      cy.get('#saveblog').click()
-      cy.get('#view').click()
-      cy.get('#likeButton').click()
+      cy.get('.titleInput').type('this is a test')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
+      cy.get('.view').click()
+      cy.get('.likeButton').click()
     })
 
     it('blog owner can delete it', function() {
       cy.contains('add new blog').click()
-      cy.get('#title').type('this is a test')
-      cy.get('#author').type('Diego Ramos')
-      cy.get('#url').type('www.cy.com')
-      cy.get('#saveblog').click()
-      cy.get('#view').click()
-      cy.get('#likeButton').click()
-      cy.get('#deleteButton').click()
+      cy.get('.titleInput').type('this is a test')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
+      cy.get('.view').click()
+      cy.get('.likeButton').click()
+      cy.get('.deleteButton').click()
     })
 
     it('users cant delete blog they didnt create', function() {
       // first create the blog with default user
       cy.contains('add new blog').click()
-      cy.get('#title').type('this is a test')
-      cy.get('#author').type('Diego Ramos')
-      cy.get('#url').type('www.cy.com')
-      cy.get('#saveblog').click()
+      cy.get('.titleInput').type('this is a test')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
 
       // logout
       cy.get('#logoutButton').click()
@@ -96,11 +96,36 @@ describe('Blog app', function() {
       cy.get('#submit').click()
 
       // open blog details and try to delete it
-      cy.get('#view').click()
-      cy.get('#likeButton').click()
-      cy.get('#deleteButton')
+      cy.get('.view').click()
+      cy.get('.likeButton').click()
+      cy.get('.deleteButton')
         .should('not.exist')
-
     })
+
+    it('blogs are ordered by the amount of likes', function() {
+      // create blogs
+      // blog1
+      cy.contains('add new blog').click()
+      cy.get('.titleInput').type('this blog will have no likes (0)')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
+
+      // blog2
+      // cy.contains('add new blog').click()
+      cy.get('.titleInput').type('this blog will have more likes')
+      cy.get('.authorInput').type('Diego Ramos')
+      cy.get('.urlInput').type('www.cy.com')
+      cy.get('.saveblog').click()
+
+      // get blog2 and click like
+      cy.get('.view').eq(1).click()
+        .get('.likeButton').eq(1).click()
+
+        // check if the blog we liked it is now on top
+      cy.get('.blog').eq(0).should('contain', 'this blog will have more likes')
+    })
+
+
   })
 })
