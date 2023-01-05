@@ -1,4 +1,5 @@
 describe('Blog app', function() {
+  // ! my backend is using port 3003 - remember to update
   beforeEach(function() {
    cy.request('POST', 'http://localhost:3003/api/testing/reset')
    const user = {
@@ -35,50 +36,31 @@ describe('Blog app', function() {
 
   describe('When logged in', function() {
     beforeEach(function() {
-      cy.contains('login').click()
-      cy.get('#username').type('diegorramos')
-      cy.get('#password').type('test')
-      cy.get('#submit').click()
+      cy.login({ username: 'diegorramos', password: 'test'})
+      cy.createBlog({
+        title: 'this is a test',
+        author: 'Diego Ramos',
+        url: 'www.cy.com'
+      })
     })
 
-    it('A blog can be created', function() {
-      cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this is a test')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
+    it('a blog exists', function() {
+      cy.get('.blog').should('contain', 'this is a test')
     })
 
     it('user can like a blog', function() {
-      cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this is a test')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
       cy.get('.view').click()
       cy.get('.likeButton').click()
     })
 
     it('blog owner can delete it', function() {
-      cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this is a test')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
       cy.get('.view').click()
       cy.get('.likeButton').click()
       cy.get('.deleteButton').click()
     })
 
     it('users cant delete blog they didnt create', function() {
-      // first create the blog with default user
-      cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this is a test')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
-
-      // logout
+      // logout from default user
       cy.get('#logoutButton').click()
 
       // create user2
@@ -90,10 +72,7 @@ describe('Blog app', function() {
       cy.request('POST', 'http://localhost:3003/api/users/', user2)
 
       // login user2
-      cy.contains('login').click()
-      cy.get('#username').type('user2')
-      cy.get('#password').type('test')
-      cy.get('#submit').click()
+      cy.login({ username: 'user2', password: 'test'})
 
       // open blog details and try to delete it
       cy.get('.view').click()
@@ -103,20 +82,14 @@ describe('Blog app', function() {
     })
 
     it('blogs are ordered by the amount of likes', function() {
-      // create blogs
-      // blog1
-      cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this blog will have no likes (0)')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
+      // create second blog
 
       // blog2
-      // cy.contains('add new blog').click()
-      cy.get('.titleInput').type('this blog will have more likes')
-      cy.get('.authorInput').type('Diego Ramos')
-      cy.get('.urlInput').type('www.cy.com')
-      cy.get('.saveblog').click()
+      cy.createBlog({
+        title: 'this blog will have more likes',
+        author: 'Diego Ramos',
+        url: 'www.cy.com'
+      })
 
       // get blog2 and click like
       cy.get('.view').eq(1).click()
