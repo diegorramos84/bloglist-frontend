@@ -29,6 +29,7 @@ describe('Blog app', function() {
       cy.get('#password').type('wrong')
       cy.get('#submit').click()
       cy.contains('Wrong credentials')
+        .should('have.css', 'color', 'rgb(255, 0, 0)')
     })
 
   })
