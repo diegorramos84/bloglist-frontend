@@ -54,7 +54,7 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
         <p className='likes'>likes {blog.likes} <button id="likeButton"onClick={callOnLikes ? callOnLikes : increaseLikes}>like</button></p>
         {/* <p>{blog.author}</p> */}
         {(username === blog.user.username)
-          ? <button onClick={deleteBlog}> delete </button>
+          ? <button id="deleteButton"onClick={deleteBlog}> delete </button>
           : null }
       </div>
     </div>

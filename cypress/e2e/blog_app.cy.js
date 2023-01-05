@@ -58,5 +58,49 @@ describe('Blog app', function() {
       cy.get('#view').click()
       cy.get('#likeButton').click()
     })
+
+    it('blog owner can delete it', function() {
+      cy.contains('add new blog').click()
+      cy.get('#title').type('this is a test')
+      cy.get('#author').type('Diego Ramos')
+      cy.get('#url').type('www.cy.com')
+      cy.get('#saveblog').click()
+      cy.get('#view').click()
+      cy.get('#likeButton').click()
+      cy.get('#deleteButton').click()
+    })
+
+    it('users cant delete blog they didnt create', function() {
+      // first create the blog with default user
+      cy.contains('add new blog').click()
+      cy.get('#title').type('this is a test')
+      cy.get('#author').type('Diego Ramos')
+      cy.get('#url').type('www.cy.com')
+      cy.get('#saveblog').click()
+
+      // logout
+      cy.get('#logoutButton').click()
+
+      // create user2
+      const user2 = {
+        name: 'user2',
+        username: 'user2',
+        password: 'test'
+      }
+      cy.request('POST', 'http://localhost:3003/api/users/', user2)
+
+      // login user2
+      cy.contains('login').click()
+      cy.get('#username').type('user2')
+      cy.get('#password').type('test')
+      cy.get('#submit').click()
+
+      // open blog details and try to delete it
+      cy.get('#view').click()
+      cy.get('#likeButton').click()
+      cy.get('#deleteButton')
+        .should('not.exist')
+
+    })
   })
 })
