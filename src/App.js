@@ -3,10 +3,13 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import ErrorMessage from './components/ErrorMessage'
 import LoginForm from './components/LoginForm'
+import Navbar from './components/Navbar'
 import Notification from './components/Notification'
 import Togglable from './components/Toggable'
 import blogService from './services/blogs'
 import loginServices from './services/login'
+
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -82,7 +85,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <Navbar></Navbar>
 
       <ErrorMessage message={errorMessage} />
       <Notification message={message} />
@@ -107,7 +110,6 @@ const App = () => {
           {allBlogs()}
         </div>
       }
-
     </div>
   )
 }

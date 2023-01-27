@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
+import { Button } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 
 const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
   const [visible, setVisible] = useState(false)
@@ -45,16 +49,18 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
       <div>
         <p className='title'>{blog.title}</p>
         <p className='author'>{blog.author}</p>
-        {!visible ? <button className="view" style={buttonStyle} onClick={toggleVisibility}>view</button> :null}
+        {!visible ? <IconButton variant='contained' className="view" style={buttonStyle} onClick={toggleVisibility}><VisibilityIcon color='primary'></VisibilityIcon></IconButton> :null}
       </div>
       <div className='togglableContent'style={showWhenVisible}>
-        <button onClick={toggleVisibility}>hide</button>
+        <Button variant='contained' onClick={toggleVisibility}>hide</Button>
         <p className='url'>{blog.url}</p>
         {/* using callOnlikes "trick" to avoid triggeting the function that has put and get requests */}
-        <p className='likes'>likes {blog.likes} <button className="likeButton"onClick={callOnLikes ? callOnLikes : increaseLikes}>like</button></p>
+        <p className='likes'>  <IconButton className="likeButton"onClick={callOnLikes ? callOnLikes : increaseLikes}>
+          <ThumbUpIcon color="primary"></ThumbUpIcon>
+        </IconButton>({blog.likes})</p>
         {/* <p>{blog.author}</p> */}
         {(username === blog.user.username)
-          ? <button className="deleteButton"onClick={deleteBlog}> delete </button>
+          ? <Button variant='contained' className="deleteButton"onClick={deleteBlog}> delete </Button>
           : null }
       </div>
     </div>
