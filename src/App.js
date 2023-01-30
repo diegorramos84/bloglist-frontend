@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import ErrorMessage from './components/ErrorMessage'
+import HeroBanner from './components/HeroBanner'
 import LoginForm from './components/LoginForm'
 import Navbar from './components/Navbar'
 import Notification from './components/Notification'
@@ -9,6 +10,9 @@ import Togglable from './components/Toggable'
 import blogService from './services/blogs'
 import loginServices from './services/login'
 
+// Grid
+
+import { Grid, Box } from '@mui/material'
 
 
 const App = () => {
@@ -86,6 +90,7 @@ const App = () => {
   return (
     <div>
       <Navbar></Navbar>
+      <HeroBanner></HeroBanner>
 
       <ErrorMessage message={errorMessage} />
       <Notification message={message} />
@@ -107,7 +112,16 @@ const App = () => {
             <BlogForm createBlog={createBlog}/>
           </Togglable>
           <br></br>
-          {allBlogs()}
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2}>
+              {allBlogs().map((b, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  {b}
+                </Grid>
+              ))}
+                {/* {allBlogs.map()} */}
+            </Grid>
+          </Box>
         </div>
       }
     </div>

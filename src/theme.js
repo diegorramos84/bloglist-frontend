@@ -1,3 +1,4 @@
+import { orange } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
@@ -7,9 +8,14 @@ const theme = createTheme({
     },
     secondary: {
       main: '#ffffff',
-      dark: '#212121',
 
     },
+    dark: {
+      main: '#212121',
+    },
+    myColor: {
+      main: orange[500]
+    }
   },
 })
 
