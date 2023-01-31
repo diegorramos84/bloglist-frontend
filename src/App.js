@@ -114,12 +114,12 @@ const App = () => {
           <br></br>
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-              {allBlogs().map((b, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
+              {allBlogs().map((b) => (
+                <Grid item xs={12} sm={6} md={4} key={b.id}>
                   {b}
                 </Grid>
               ))}
-                {/* {allBlogs.map()} */}
+              {/* {allBlogs.map()} */}
             </Grid>
           </Box>
         </div>
