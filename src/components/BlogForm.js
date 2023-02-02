@@ -9,8 +9,22 @@ const BlogForm = ({ createBlog }) => {
     likes: '',
   })
 
+  const [newImage, setNewImage] = useState(null)
+
   const handleBlogChange = (event) => {
     setNewBlog({ ...newBlog, [event.target.name]: event.target.value })
+    console.log(newBlog)
+  }
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]
+    console.log(file)
+    const reader = new FileReader()
+    reader.onload = () => {
+      setNewImage(reader.result)
+    }
+    reader.readAsDataURL(file)
+    console.log(newImage, 'result')
   }
 
   const addBlog = (event) => {
@@ -18,18 +32,21 @@ const BlogForm = ({ createBlog }) => {
     createBlog({
       title: newBlog.title,
       author: newBlog.author,
-      url: newBlog.url
+      url: newBlog.url,
+      image: newImage,
     })
+    console.log(createBlog)
     setNewBlog({
       title: '',
       author: '',
-      url: '',
+      url: ''
     })
+    setNewImage('')
   }
 
   return (
     <div>
-      <form onSubmit={addBlog}>
+      <form onSubmit={addBlog} encType='multipart/form-data'>
         <div>
           <label>
             Title:
@@ -63,6 +80,18 @@ const BlogForm = ({ createBlog }) => {
               name="url"
               value={newBlog.url}
               onChange={handleBlogChange}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Image:
+            <input
+              className="imageInput"
+              type="file"
+              name="image"
+              value={newBlog.image}
+              onChange={handleImageChange}
             />
           </label>
         </div>

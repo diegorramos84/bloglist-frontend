@@ -76,6 +76,7 @@ const App = () => {
 
 
   const createBlog = (blogObject) => {
+    console.log(blogObject, 'blog object')
     blogService
       .create(blogObject)
       .then(returnedBlog => {
