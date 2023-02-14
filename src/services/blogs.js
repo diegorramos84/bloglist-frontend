@@ -24,11 +24,8 @@ const create = async newObject => {
 }
 
 const update = (id, newObject) => {
-  const config = {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }
 
-  const request = axios.put(`${baseUrl}/${id}`, newObject, config)
+  const request = axios.put(`${baseUrl}/${id}`, newObject)
   return request.then(response => response.data)
 }
 

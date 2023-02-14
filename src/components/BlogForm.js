@@ -41,7 +41,8 @@ const BlogForm = ({ createBlog }) => {
       author: '',
       url: ''
     })
-    setNewImage('')
+    setNewImage(null)
+    document.getElementById('imageInput').value=null
   }
 
   return (
@@ -87,6 +88,7 @@ const BlogForm = ({ createBlog }) => {
           <label>
             Image:
             <input
+              id='imageInput'
               className="imageInput"
               type="file"
               name="image"

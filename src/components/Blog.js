@@ -13,6 +13,7 @@ import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import CardMedia from '@mui/material/CardMedia'
 
 
 const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
@@ -38,6 +39,7 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
   }
 
   const increaseLikes = async () => {
+    console.log(' likes')
     const increaseLikes = blog.likes + 1
     await blogService.update(blog.id, { ...blog, likes: increaseLikes })
     const updatedBlogs = await blogService.getAll()
@@ -56,6 +58,10 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
 
   return (
     <Card variant='outlined' sx={{ minWidth: 275 }}>
+      <CardMedia
+        sx={{ height: 140 }}
+        image= {blog.image}
+      />
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" className='title'gutterBottom>
           {blog.title}
@@ -77,7 +83,7 @@ const Blog = ({ blog, setBlogs, username, callOnLikes }) => {
           <Typography x={{ mb: 1.5 }} color="text.secondary" className='url'>
             {blog.url}
           </Typography>
-          <p className='likes'>  <IconButton className="likeButton"onClick={callOnLikes ? callOnLikes : increaseLikes}>
+          <p className='likes'><IconButton className="likeButton" onClick={callOnLikes ? callOnLikes : increaseLikes}>
             <ThumbUpIcon color="primary"></ThumbUpIcon>
           </IconButton>({blog.likes})</p>
           {(username === blog.user.username)
